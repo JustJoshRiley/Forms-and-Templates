@@ -6,10 +6,14 @@
     <body>
         <!-- Your HTML code goes here! -->
 
-
-
-
-
-        
+        {% if operator == 'add' %}
+            <p> {{(number1 + number2)}} </p>
+        {% elif operator == 'subtract' %}
+            <p> {{(number1 - number2)}} </p>
+        {% elif operator == 'divide' %}
+            <p> {{(number1 % number2)}} </p>
+        {% elif operator == 'multiply' %}
+            <p> {{(number1 * number2)}} </p>
+        {% endif %}
     </body>
 </html>

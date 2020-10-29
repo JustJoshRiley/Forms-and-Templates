@@ -5,8 +5,10 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
+        {% users_froyo_flavor = request.args.get('flavor') %}
+        {% users_topping = request.args.get('topping') %}
 
-
+        <p> You ordered {{users_froyo_flavor}} with {{users_topping}} on top! </p>
 
 
 

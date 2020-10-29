@@ -17,14 +17,7 @@ def homepage():
 @app.route('/froyo')
 def choose_froyo():
     """Shows a form to collect the user's Fro-Yo order."""
-    return """
-        <form action="/froyo_results" method="GET">
-        What is your favorite Fro-Yo flavor? <br/>
-        <input type="text" name="flavor"><br/>
-        <input type="text" name="topping"><br/>
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('froyo_form.html')
 
 @app.route('/froyo_results')
 def show_froyo_results():
@@ -78,25 +71,18 @@ def message_results():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="GET">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('calculator_form.html')
 
-@app.route('/calculator_results')
+@app.route('/calculator_results', methods=['POST'])
 def calculator_results():
     """Shows the user the result of their calculation."""
-    pass
+    context  = {
+        'number1': int(request.form.get('operand1')),
+        'number2': int(request.form.get('operand2')),
+        'operator': str(request.form.get('operation'))
+    }
+
+    return render_template('calculator_results.html', **context)
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
