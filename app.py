@@ -59,12 +59,21 @@ def favorites_results():
 def secret_message():
     """Shows the user a form to collect a secret message. Sends the result via
     the POST method to keep it a secret!"""
-    pass
+    return """
+    <form action='/message_results' method="POST">
+        Enter a Secret Message: <br/>
+        <input type="text" name="message"> <br/>
+        <input type="submit" value="submit">
+    </form>
+    """
 
 @app.route('/message_results', methods=['POST'])
 def message_results():
     """Shows the user their message, with the letters in sorted order."""
-    pass
+    secret = request.args.get('message')
+    secret = str('message')
+    arranged_letters = sort_letters(secret)
+    return f'Here is your secret message: {arranged_letters}'
 
 @app.route('/calculator')
 def calculator():
