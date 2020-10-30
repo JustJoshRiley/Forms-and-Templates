@@ -5,10 +5,16 @@
     </head>
     <body>
         <!-- Your HTML code goes here! -->
+        <h1>Welcome {{users_name}}</h1>
 
-        
-
-        
-        
+        {% if wants_compliments == 'yes' %}
+        <ul>
+            {% for compliment in compliments_list%}
+            <li>
+                {{compliment}}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </body>
 </html>

@@ -22,16 +22,18 @@ def choose_froyo():
 @app.route('/froyo_results')
 def show_froyo_results():
     """Shows the user what they ordered from the previous page."""
-    users_froyo_flavor = request.args.get('flavor')
-    users_topping = request.args.get('topping')
-    return f'You ordered {users_froyo_flavor} flavored Fro-Yo and your toppings are {users_topping}!'
+    context = {
+        'users_froyo_flavor': request.args.get('flavor'),
+        'users_topping': request.args.get('toppings')
+    }
+    return render_template('froyo_results.html', **context)
 
 @app.route('/favorites')
 def favorites():
     """Shows the user a form to choose their favorite color, animal, and city."""
     return """
     <form action="/favorites_results" method="GET">
-    What is your favorite color, animal, and city? <br/>
+    What is your favorite color, favorite animal, and favorite city? <br/>
         <input type="text" name="color"> <br/>
         <input type="text" name="animal"> <br/>
         <input type="text" name="city"> <br/>
@@ -63,8 +65,7 @@ def secret_message():
 @app.route('/message_results', methods=['POST'])
 def message_results():
     """Shows the user their message, with the letters in sorted order."""
-    secret = request.args.get('message')
-    secret = str('message')
+    secret = request.form.get('message')
     arranged_letters = sort_letters(secret)
     return f'Here is your secret message: {arranged_letters}'
 
@@ -73,13 +74,13 @@ def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
     return render_template('calculator_form.html')
 
-@app.route('/calculator_results', methods=['POST'])
+@app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
     context  = {
-        'number1': int(request.form.get('operand1')),
-        'number2': int(request.form.get('operand2')),
-        'operator': str(request.form.get('operation'))
+        'number1': int(request.args.get('operand1')),
+        'number2': int(request.args.get('operand2')),
+        'operator': str(request.args.get('operation'))
     }
 
     return render_template('calculator_results.html', **context)
@@ -124,8 +125,11 @@ def compliments_results():
     """Show the user some compliments."""
     context = {
         # TODO: Enter your context variables here.
+        'users_name': str(request.args.get('users_name')),
+        'wants_compliments' : request.args.get('wants_compliments'),
+        'compliments_number': int(request.args.get('num_compliments')),
+        'compliments_list': random.sample(list_of_compliments, int(request.args.get('num_compliments')))
     }
-
     return render_template('compliments_results.html', **context)
 
 
